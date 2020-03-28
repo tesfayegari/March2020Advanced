@@ -1,3 +1,4 @@
+'use strict'
 //ECASCript 6 and 7
 //declaring variable 
 let movie = 'Lord of the Rings'; //{1}
@@ -20,9 +21,10 @@ var myHtml = '<input type="number" id="userData">' +
       '<input type="button" value="Calculate Square Root" onclick="calculateSquareroot()">' +
 '<br>' +
 '<h3 id="output"></h3>';
+let txt = "Calculate Square Root";
 
 myHtml = `<input type="number" id="userData">
-          <input type="button" value="Calculate Square Root" onclick="calculateSquareroot()">
+          <input type="button" value=${txt} onclick="calculateSquareroot()">
           <br>
           <h3 id="output"></h3>`;
 
@@ -46,3 +48,7 @@ var funName = function(){
 }
 
 funName = () =>{}
+
+
+const PI=3.1415;
+PI=5;

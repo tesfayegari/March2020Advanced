@@ -1,0 +1,47 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<div class="pt-5">
+  <div id="displayList" class="row"></div>
+</div>
+
+<script>
+  $(document).ready(function () {
+
+    var webUrl = _spPageContextInfo.webAbsoluteUrl;
+    getData(webUrl + "/_api/web/lists/getbytitle('PnpList')/items?$top=4").then(function (response) {
+      console.log('Data is ', response);
+
+      var items = response.d.results;
+      var myHtml = '';
+      for (var index in items) {
+        myHtml += `
+          <div class="card col">
+            <div class="card-body">
+              <h4 class="card-title">${items[index].first_name} ${items[index].Title}</h4>
+              <p class="card-text">Email: ${items[index].email}</p>
+              <p class="card-text">Gender: ${items[index].gender}</p>
+              <p class="card-text">Department: ${items[index].department}</p>
+              <a href="#" class="btn btn-primary">See Detail</a>
+            </div>
+          </div>
+          `;
+      }
+
+      $('#displayList').html(myHtml);
+
+
+    }, function (error) { console.log('Oops error', error); });
+
+  });
+
+  function getData(url) {
+    return $.ajax({
+      url: url,
+      method: "GET",
+      headers: { "Accept": "application/json; odata=verbose" }
+    });
+  }
+</script>

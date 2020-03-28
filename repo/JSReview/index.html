@@ -1,18 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    input {
+      border-radius: 6px;
+      border: 1px solid #777;
+    }
+
+    .customInput {
+      font-size: 1em;
+    }
+  </style>
 </head>
+
 <body>
   <h1>Demo Testing JS Codes</h1>
   <div id="dummyContent">
-    <input type="number" id="userData">
-    <input type="button" value="Calculate Square Root" onclick="calculateSquareroot()">
+    <input type="number" placeholder="Enter Number" id="userData" class="customInput">
+    <input class="customInput" type="button" value="Calculate Square Root" id="myButton">
     <br>
     <h3 id="output"></h3>
   </div>
-  <script src="./custom.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- <script src="./custom.js"></script> -->
+  <script>
+    $(document).ready(function () {
+
+      $('#myButton').click(function () { $('#output').html(Math.sqrt($('#userData').val() * 1)) });
+      var webUrl = _spPageContextInfo.webAbsoluteUrl;
+      getData(webUrl +"/_api/web/lists/getbytitle('PnpList')/items").then(function(response){
+        console.log('Data is ', response);
+        //TODO: Code continues here for success
+
+      }, function(error){console.log('Oops error', error);});
+
+
+    });
+
+    function getData(url) {
+      return $.ajax({
+        url: url,
+        method: "GET",
+        headers: { "Accept": "application/json; odata=verbose" }
+      });
+    }
+
+
+  </script>
+
+
 </body>
+
 </html>

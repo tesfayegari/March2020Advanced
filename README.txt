@@ -28,3 +28,16 @@ Review of JS
 	- Objects 
 	- JSON
 	- ECMA Script 6 
+
+SharePoint REST API EndPoints -[READ,Update, Delete SP data ]
+
+sharepointUrl/_api/site - information about Site
+sharepointUrl/_api/web - info about web 
+sharepointUrl/_api/web/lists - info about all lists under the url 
+sharepointUrl/_api/web/lists/getbytitle('ListName') - info about specific list
+
+
+Reference https://drive.google.com/drive/u/0/folders/1_pWDhpYhDRmKJi_936e9GU1E1TPSGaSt
+
+
+
