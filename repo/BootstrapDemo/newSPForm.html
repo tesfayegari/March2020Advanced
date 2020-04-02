@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    #customFormContainer input[type=button],
+    #customFormContainer input[type=reset],
+    #customFormContainer input[type=submit],
+    #customFormContainer button {
+      min-width: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="customFormContainer" class="container-fluid mt-5">
+    <div class="form-group">
+      <label for="standardTitle">Standard Title</label>
+      <input type="text" class="form-control" id="standardTitle" placeholder="Standard Title" name="email">
+    </div>
+    <div class="form-group">
+      <label for="serviceArea">Service Area</label>
+      <input type="text" class="form-control" id="serviceArea" placeholder="Service Area" name="pswd">
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Select Baseline</label>
+      <select class="form-control" id="baseline">
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Technical Standard Status</label>
+      <select class="form-control" id="standardStatus">
+      </select>
+    </div>
+
+    <button type="button" class="btn btn-secondary" id="buttonCancel">Cancel</button>
+    <button type="button" class="btn btn-primary" id="buttonSubmit">Submit</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Status Message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modalInformation">
+            <h2> Some message goes here</h2>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function createItem(listName, data) {
+      var url = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('" + listName + "')/items";
+      var jsonData = JSON.stringify(data);
+      return $.ajax({
+        url: url,
+        method: "POST",
+        headers: {
+          'accept': 'application/json;odata=verbose',
+          "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+          'content-type': 'application/json;odata=verbose',
+
+        },
+        data: jsonData
+      });
+    }
+
+    function getData(url) {
+      return $.ajax({
+        url: url,
+        method: "GET",
+        headers: { "Accept": "application/json; odata=verbose" }
+      });
+    }
+
+    function clearForm() {
+      $('#standardTitle').val('');
+      $('#serviceArea').val('');
+      $('#baseline').val('');
+      $('#standardStatus').val('');
+    }
+
+    $(document).ready(function () {
+      //Populate both dropdowns
+      getData(_spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('SystemTechnicalStandards')/items")
+        .then(function (response) {
+          var items = response.d.results;
+          var myOptions = '<option disabled selected value="">Select ---</option>';
+          for (var index in items) {
+            myOptions += '<option value="' + items[index].ID + '">' + items[index].Title + ' | ' +
+              items[index].Revision + ' | ' + items[index].StandardId + '</option>';
+          }
+          $('#baseline').html(myOptions);
+
+        }, function (error) { console.log('Oops error happened', error) });
+      getData(_spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('TechnicalStandardStatus')/items")
+        .then(function (response) {
+          var items = response.d.results;
+          var myOptions = '<option disabled selected value="">Select ---</option>';
+          for (var index in items) {
+            myOptions += '<option value="' + items[index].ID + '">' + items[index].Title + ' | ' +
+              items[index].StatusDescription + '</option>';
+          }
+          $('#standardStatus').html(myOptions);
+
+        }, function (error) { console.log('Oops error happened', error) });
+      //end of the dropdown
+      $('#buttonSubmit').click(function () {
+        var title = $('#standardTitle').val().trim();
+        var serviceArea = $('#serviceArea').val().trim();
+        var baseline = $('#baseline').val();
+        var standardStatus = $('#standardStatus').val();
+        if (title == '') {
+          $('#modalInformation').html('<h3 class="text-danger">Standard Title can not be empty</h3>');
+          $('#errorModal').modal();
+          return;
+        }
+
+        var newItem = {
+          __metadata: {
+            'type': 'SP.Data.TechnicalStandardsListItem' // it defines the ListItemEntityTypeFullName  
+          },
+          Title: title,
+          ServiceArea: serviceArea,
+          BaseLineId: baseline == '' ? null : baseline,
+          TechnicalStandardStatusId: standardStatus == '' ? null : standardStatus
+        };
+        //Calling ajax create list item
+        createItem('TechnicalStandards', newItem).then(function (response) {
+          console.log(response);
+          $('#modalInformation').html('<h3 class="text-success">' + newItem.Title + ' Submitted Successfully</h3>');
+          $('#errorModal').modal();
+          clearForm();
+
+        }, function (error) { console.log('Oops Error, error'); })
+      });
+
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/2e3ad2550e.js" crossorigin="anonymous"></script>
+  <style>
+    #customForm button {
+      min-width: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container mt-5" id="customForm">
+    <div class="row">
+      <div class="col">
+        <table class="table">
+          <tr>
+            <th scope="col">Baseline</th>
+            <th scope="col">Revision</th>
+            <th scope="col">Standard ID</th>
+            <th>
+              <!-- Button to Open the Modal -->
+              <button type="button" class="btn btn-primary" id="selectLookup" data-toggle="modal"
+                data-target="#myModalLookup">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+            </th>
+          </tr>
+          <tbody id="lookupSelected">
+            <p class="text-center">Please Choose Standard</p>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModalLookup">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Select Lookup</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search ...." id="searchLookupInput">
+              <div class="input-group-append">
+                <button class="btn btn-secondary" type="button" id="searchLookup">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+            <div>
+              <!-- table start  -->
+              <table class="table">
+                <tr>
+                  <th scope="col">Baseline</th>
+                  <th scope="col">Revision</th>
+                  <th scope="col">Standard ID</th>
+                  <th>
+                    Select
+                  </th>
+                </tr>
+                <tbody id="lookupResults">
+                  <p class="text-center">Please search...</p>
+                </tbody>
+              </table>
+              <!-- table end  -->
+            </div>
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+
+    var customFormConfig = (function () {
+      return {
+        lookupItems: [],
+        selectedItem: {
+          Title: "Some Baseline",
+          Revision: "Sample Revision 1",
+          StandardId: "ST001",
+          ID: 1
+        },
+        update: function () {
+          $('#lookupSelected').html(`
+          <tr>
+            <td>${this.selectedItem.Title}</td>
+            <td>${this.selectedItem.Revision}</td>
+            <td>${this.selectedItem.StandardId}</td>
+            <td>
+              <button type="button" class="btn btn-danger" onClick="customFormConfig.removeSelected()">
+                <i class="fas fa-trash-alt"></i>
+              </button></td>
+          </tr>
+          `);
+        },
+        removeSelected: function () {
+          $('#lookupSelected').html('<p class="text-center">Please Choose Standard</p>');
+          this.selectedItem = {};
+        },
+        setSelectedItem: function (itemID) {
+          var i = this.lookupItems.filter(function (item) { if (item.ID == itemID) return true; })
+          if (i.length >= 0) {
+            this.selectedItem = i[0];
+            this.update();
+          }
+        }
+      }
+    })();
+
+    function addSelected(itemID) {
+      customFormConfig.setSelectedItem(itemID);
+    }
+
+    function getData(url) {
+      return $.ajax({
+        url: url,
+        method: "GET",
+        headers: { "Accept": "application/json; odata=verbose" }
+      });
+    }
+    function errorFunc(error) {
+      console.log('Ooops error occured', error);
+    }
+
+    function searchLooupItems() {
+      var query = $('#searchLookupInput').val().trim();
+      var url = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('SystemTechnicalStandards')/items'";
+      if (query !== '') {
+        url += "?$filter=substringof('" + query + "',Title)&$top=15";
+      } else {
+        url += "?$top=15";
+      }
+      getData(url).then(function (response) {
+        var items = response.d.results;
+        customFormConfig.lookupItems = items;
+        console.log('Data is ', items);
+        // Render Lookup Search result 
+        var lookupHtml = '';
+        items.forEach(function (item) {
+          lookupHtml += `
+              <tr>
+                <td>${item.Title}</td>
+                <td>${item.Revision}</td>
+                <td>@${item.StandardId}</td>
+                <td>
+                  <button type="button" class="btn btn-success" onClick="addSelected(${item.ID})">
+                    <i class="fas fa-check-circle"></i>
+                  </button></td>
+              </tr>`;
+        });
+        $('#lookupResults').html(lookupHtml);
+        //End of the Search 
+      }, errorFunc);
+    }
+
+    //Initialization 
+    $(document).ready(function () {
+      var lookupConfiguration = {
+        listName: 'SystemTechnicalStandards',
+        siteUrl: 'https://tgari2018.sharepoint.com/sites/yetim/',
+        columnInternalNames: ['Title', 'Revision', 'StandardId'],
+        selectorId: 'customLookup',
+        selectedItem: {},
+      }
+      $('#searchLookup').click(searchLooupItems);
+      $('#selectLookup').click(function () {
+        customFormConfig.lookupItems = [];
+        $('#lookupResults').html('<p class="text-center">Please search</p>');
+      });
+    });
+
+  </script>
+
+</body>
+
+</html>
