@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BackLog Tasks</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    .jumbotron {
+      padding: 5px;
+      margin-bottom: .5em;
+    }
+    #myBackLogTasks input[type=button], 
+    #myBackLogTasks input[type=reset], 
+    #myBackLogTasks input[type=submit], 
+    #myBackLogTasks button {
+      min-width: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="jumbotron text-center">
+    <h1>Backlog Tasks</h1>
+    <p>Please Log any tasks that needs to be accomplished once the CORONA is gone</p>
+  </div>
+
+  <div class="container" id="myBackLogTasks">
+    <div class="row">
+      <div class="col">
+        <!-- Button trigger modal -->
+        <button type="button" id="newTaskButton" class="btn btn-primary" data-toggle="modal"
+          data-target="#exampleModal">
+          Log New Task
+        </button>
+        <button type="button" class="btn btn-primary" id="refreshButton">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="col">
+        <!-- Another variation with a button -->
+        <div class="input-group">
+          <input type="text" class="form-control" id="searchBox" placeholder="Search Logged Tasks ...">
+          <div class="input-group-append">
+            <button class="btn btn-dark" type="button" id="searchButton">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Table result display  -->
+    <div class="row my-2" id="pagedTask">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Task Title</th>
+            <th scope="col" class="d-none d-sm-table-cell">Task Detail</th>
+            <th scope="col">View/Edit/Delete</th>
+          </tr>
+        </thead>
+        <tbody id="taskResults">
+          <tr class="table-success">
+            <td>Collect Laptops</td>
+            <td class="d-none d-sm-table-cell">Some text goes here for more detail</td>
+            <td>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editTask"><i
+                  class="fa fa-eye"></i></button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTask"><i
+                  class="fa fa-edit"></i></button>
+              <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>Collect Laptops</td>
+            <td class="d-none d-sm-table-cell">Some text goes here for more detail</td>
+            <td>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editTask"><i
+                  class="fa fa-eye"></i></button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTask"><i
+                  class="fa fa-edit"></i></button>
+              <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>Clear Laptops</td>
+            <td class="d-none d-sm-table-cell">Some text goes here for more detail</td>
+            <td>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editTask"><i
+                  class="fa fa-eye"></i></button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTask"><i
+                  class="fa fa-edit"></i></button>
+              <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>Clean up of office</td>
+            <td class="d-none d-sm-table-cell">Some text goes here for more detail</td>
+            <td>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editTask"><i
+                  class="fa fa-eye"></i></button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTask"><i
+                  class="fa fa-edit"></i></button>
+              <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Next</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Modal new Task -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New Backlog Task</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="taskTitle">Task Title</label>
+              <input type="text" class="form-control" id="taskTitle" placeholder="Uninstalling Softwares ...">
+            </div>
+            <div class="form-group">
+              <label for="taskDetails">Example textarea</label>
+              <textarea class="form-control" id="taskDetails" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button id="submitButton" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script>
+    function getDataByUrl(url) {
+      return $.ajax({
+        url: url,
+        method: "GET",
+        headers: { "Accept": "application/json; odata=verbose" }
+      });
+    }
+
+    function refreshData() {
+      var siteUrl = _spPageContextInfo.webAbsoluteUrl;
+      getDataByUrl(siteUrl + "/_api/web/lists/getbytitle('BackLogTasks')/items").then(function (response) {
+        console.log('Data is ', response);
+        var items = response.d.results;
+
+        var taskDataHtml = '';
+        items.forEach(function (item) {
+          taskDataHtml += `
+              <tr>
+                <td>${item.Title}</td>
+                <td class="d-none d-sm-table-cell">${item.Description}</td>
+                <td>
+                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editTask"><i
+                      class="fa fa-eye"></i></button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTask"><i
+                      class="fa fa-edit"></i></button>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                </td>
+              </tr>
+              `;
+        });//end of forEach
+
+        $('#taskResults').html(taskDataHtml);
+
+      }, errorFunction);
+    }
+
+    function errorFunction(error) {
+      console.log('Oops error occured', error);
+    }
+
+    $(document).ready(function () {
+      refreshData();
+    });//end of document ready
+  </script>
+</body>
+</body>
+
+</html>

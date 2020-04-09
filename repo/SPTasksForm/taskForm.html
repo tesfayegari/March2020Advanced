@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+  <title>New Task Form</title>
+</head>
+
+<body>
+  <div class="container" id="myTaksForm">
+    <div class="form-group">
+      <label for="taskName">Task Name</label>
+      <input type="text" class="form-control" id="taskName" placeholder="Task Name">
+    </div>
+    <div class="form-group">
+      <label for="startDate">Start Date</label>
+      <input type="date" class="form-control" id="startDate" placeholder="Start Date">
+    </div>
+    <div class="form-group">
+      <label for="endDate">End Date</label>
+      <input type="date" class="form-control" id="endDate" placeholder="Start Date">
+    </div>
+
+    <!-- <div class="form-group">
+      <label for="exampleFormControlSelect2">Example multiple select</label>
+      <select multiple class="form-control" id="exampleFormControlSelect2">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div> -->
+    <div class="form-group">
+      <label for="taskDescription">Task Detail</label>
+      <textarea class="form-control" id="taskDescription" rows="6"></textarea>
+    </div>
+    <div class="float-right">
+      <button type="button" id="buttonSubmit" class="btn btn-primary">Submit</button>
+    <button type="button" id="buttonCancel" class="btn btn-secondary ">Cancel</button>
+    </div>
+
+    <!--end of form-->
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="/sites/yetim/SiteAssets/apps/sphelper.js"></script>
+  <script src="/sites/yetim/SiteAssets/apps/customTaskForm.js"></script>
+</body>
+
+</html>
