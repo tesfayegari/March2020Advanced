@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "march-2020-spfx-client-side-solution",
+    "id": "0edca54d-b6d7-46d2-b50c-f98a0731c1cc",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "isDomainIsolated": false
+  },
+  "paths": {
+    "zippedPackage": "solution/march-2020-spfx.sppkg"
+  }
+}
