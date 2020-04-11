@@ -19,7 +19,7 @@
     "group": { "default": "MTM Webparts" },
     "title": { "default": "Reading List" },
     "description": { "default": "Reading List description" },
-    "officeFabricIconFontName": "Page",
+    "officeFabricIconFontName": "CustomList",
     "properties": {
       "description": "ReadingList"
     }
