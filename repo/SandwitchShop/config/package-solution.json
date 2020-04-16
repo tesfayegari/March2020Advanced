@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "sandwitch-shop-client-side-solution",
+    "id": "c9c91553-1d68-4de9-aea1-40d85b8df9fb",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "isDomainIsolated": false
+  },
+  "paths": {
+    "zippedPackage": "solution/sandwitch-shop.sppkg"
+  }
+}

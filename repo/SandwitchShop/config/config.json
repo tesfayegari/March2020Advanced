@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "sandwith-shop-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/sandwithShop/SandwithShopWebPart.js",
+          "manifest": "./src/webparts/sandwithShop/SandwithShopWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "SandwithShopWebPartStrings": "lib/webparts/sandwithShop/loc/{locale}.js"
+  }
+}
