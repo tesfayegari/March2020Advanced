@@ -9,13 +9,20 @@
           "manifest": "./src/webparts/readingList/ReadingListWebPart.manifest.json"
         }
       ]
+    },
+    "mtm-carousels-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/mtmCarousels/MtmCarouselsWebPart.js",
+          "manifest": "./src/webparts/mtmCarousels/MtmCarouselsWebPart.manifest.json"
+        }
+      ]
     }
   },
-  "externals": {
-    
-  },
+  "externals": {},
   "localizedResources": {
     "ReadingListWebPartStrings": "lib/webparts/readingList/loc/{locale}.js",
-    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js"
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js",
+    "MtmCarouselsWebPartStrings": "lib/webparts/mtmCarousels/loc/{locale}.js"
   }
 }

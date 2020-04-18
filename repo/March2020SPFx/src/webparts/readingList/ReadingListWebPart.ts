@@ -32,8 +32,7 @@ export default class ReadingListWebPart extends BaseClientSideWebPart<IReadingLi
     SPComponentLoader.loadCss('https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
     this.domElement.innerHTML = `
     <h1>All Lists you you have under your site</h1>
-    <div class="list-group list-group-flush" id="restData">
-      
+    <div class="list-group list-group-flush" id="restData">      
     </div>
         `;
     this.readLists();
