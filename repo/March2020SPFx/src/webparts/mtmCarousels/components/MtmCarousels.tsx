@@ -21,7 +21,7 @@ export default class MtmCarousels extends React.Component<IMtmCarouselsProps, IM
   }
 
   private readListItems(listName) {
-    this.props.spfxContext.spHttpClient.get(`${this.props.spfxContext.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('${listName}')/items`,
+    this.props.spfxContext.spHttpClient.get(`${this.props.spfxContext.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('${listName}')/items?$filter=Active ne false`,
       SPHttpClient.configurations.v1)
       .then((response: SPHttpClientResponse): Promise<{ value: IListItem[] }> => {
         return response.json();

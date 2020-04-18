@@ -10,6 +10,7 @@ export interface IListItem {
   Description: string;
   LinkUrl: string;
   ImageUrl: string;
+  Active?:boolean;
 }
 
 export interface IMtmCarouselsState{
