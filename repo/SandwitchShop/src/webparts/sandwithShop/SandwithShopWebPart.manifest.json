@@ -16,10 +16,10 @@
 
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
-    "group": { "default": "Other" },
+    "group": { "default": "MTM Webparts" },
     "title": { "default": "SandwithShop" },
     "description": { "default": "SandwithShop description" },
-    "officeFabricIconFontName": "Page",
+    "officeFabricIconFontName": "ActivateOrders",
     "properties": {
       "description": "SandwithShop"
     }

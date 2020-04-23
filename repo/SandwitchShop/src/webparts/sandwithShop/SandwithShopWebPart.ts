@@ -16,14 +16,14 @@ export interface ISandwithShopWebPartProps {
   description: string;
 }
 
-export default class SandwithShopWebPart extends BaseClientSideWebPart <ISandwithShopWebPartProps> {
+export default class SandwithShopWebPart extends BaseClientSideWebPart<ISandwithShopWebPartProps> {
 
   public render(): void {
-    SPComponentLoader.loadCss('https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');    const element: React.ReactElement<ISandwithShopProps> = React.createElement(
+    SPComponentLoader.loadCss('https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
+    const element: React.ReactElement<ISandwithShopProps> = React.createElement(
       SandwithShop,
       {
-        description: this.properties.description,
-        spContext: this.context
+        description: this.properties.description       
       }
     );
 

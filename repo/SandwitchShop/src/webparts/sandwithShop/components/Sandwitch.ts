@@ -1,7 +1,7 @@
 export interface ISandwitch{
-  name: string;
-  price: number;  
-  id: number;
+  Title: string;
+  unitPrice: number;  
+  Id: number;
 }
 
 export interface ISandwitchOrders {
