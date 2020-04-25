@@ -1,0 +1,155 @@
+<!-- /_api/web/Lists/getbytitle('SystemBaselines')/items?$select=*,SystemID/Title,SystemID/SystemID&$expand=SystemID -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    #customFormContainer input[type=button],
+    #customFormContainer input[type=reset],
+    #customFormContainer input[type=submit],
+    #customFormContainer button {
+      min-width: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="customFormContainer" class="container-fluid mt-5">
+    <div class="form-group">
+      <label for="interopTitle">Interop Title</label>
+      <input type="text" class="form-control" id="interopTitle" placeholder="Title">
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Select System 1</label>
+      <select class="form-control" id="system1">
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Select System 2</label>
+      <select class="form-control" id="system2">
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" rows="3"></textarea>
+    </div>
+
+    <button type="button" class="btn btn-secondary" id="buttonCancel">Cancel</button>
+    <button type="button" class="btn btn-primary" id="buttonSubmit">Submit</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Status Message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modalInformation">
+            <h2> Some message goes here</h2>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function createItem(listName, data) {
+      var url = _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/getbytitle('" + listName + "')/items";
+      var jsonData = JSON.stringify(data);
+      return $.ajax({
+        url: url,
+        method: "POST",
+        headers: {
+          'accept': 'application/json;odata=verbose',
+          "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+          'content-type': 'application/json;odata=verbose',
+        },
+        data: jsonData
+      });
+    }
+
+    function getData(url) {
+      return $.ajax({
+        url: url,
+        method: "GET",
+        headers: { "Accept": "application/json; odata=verbose" }
+      });
+    }
+
+    function clearForm() {
+      $('#interopTitle').val('');
+      $('#system1').val('0');
+      $('#system2').val('0');
+      $('#description').val('');
+    }
+
+    $(document).ready(function () {
+      //Populate both dropdowns
+      ///_api/web/Lists/getbytitle('MultiLookupTest')/items?$select=*,Multi/Title&$expand=Multi
+      var url = _spPageContextInfo.webAbsoluteUrl + "/_api/web/Lists/getbytitle('SystemBaselines')/items?$select=*,SystemID/Title,SystemID/SystemID&$expand=SystemID";
+      getData(url)
+        .then(function (response) {
+          var items = response.d.results;
+          var myOptions = '<option disabled selected value="0">Select ---</option>';
+          for (var index in items) {
+            myOptions += '<option value="' + items[index].ID + '">' + items[index].Title + ' | ' +
+              items[index].SystemID.Title + ' | ' + items[index].SystemID.SystemID + '</option>';
+          }
+          $('#system1').html(myOptions);
+          $('#system2').html(myOptions);
+
+        }, function (error) { console.log('Oops error happened', error) });
+
+      $('#buttonSubmit').click(function () {
+        var title = $('#interopTitle').val().trim();
+        var system1 = $('#system1').val();
+        var system2 = $('#system2').val();
+        var description = $('#description').val();
+        if (title == '' || system1 == null || system2 == null) {
+          $('#modalInformation').html('<h3 class="text-danger">Title, System 1 and System 2 can not be empty</h3>');
+          $('#errorModal').modal();
+          return;
+        }
+
+          var newItem = {
+            __metadata: {
+              'type': 'SP.Data.BaseLlineInteroperabilityListItem' // it defines the ListItemEntityTypeFullName  
+            },
+            Title: title,
+            DependentSys1Id: system1,
+            DependentSys2Id: system2,
+            Description: description
+          };
+        //   //Calling ajax create list item in BaseLlineInteroperability
+          createItem('BaseLlineInteroperability', newItem).then(function (response) {
+            console.log(response);
+            $('#modalInformation').html('<h3 class="text-success">' + newItem.Title + ' Submitted Successfully</h3>');
+            $('#errorModal').modal();
+            clearForm();
+
+          }, function (error) { console.log('Oops Error, error'); })
+      });
+
+    });
+  </script>
+
+</body>
+
+</html>

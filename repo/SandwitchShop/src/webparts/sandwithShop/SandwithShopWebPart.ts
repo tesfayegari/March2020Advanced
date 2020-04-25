@@ -23,7 +23,8 @@ export default class SandwithShopWebPart extends BaseClientSideWebPart<ISandwith
     const element: React.ReactElement<ISandwithShopProps> = React.createElement(
       SandwithShop,
       {
-        description: this.properties.description       
+        description: this.properties.description,
+        spContext: this.context       
       }
     );
 

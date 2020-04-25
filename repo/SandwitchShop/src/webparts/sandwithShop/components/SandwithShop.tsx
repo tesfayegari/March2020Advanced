@@ -24,7 +24,7 @@ export default class SandwithShop extends React.Component<ISandwithShopProps, Sa
     this.onChange = this.onChange.bind(this);
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
-    this.submitData = this.submitData.bind(this);
+    this.submitData = this.submitData.bind(this);    
   }
 
   onChange(e) {
@@ -38,7 +38,7 @@ export default class SandwithShop extends React.Component<ISandwithShopProps, Sa
     const sand = this.state.sandwitches.filter(s => s.Id == this.state.sandwitchId);
     if (sand.length > 0) {
       let ordrs = this.state.orders;
-      ordrs.push({ sandwitch: sand[0], quanity: this.state.quantity * 1 });
+      ordrs.unshift({ sandwitch: sand[0], quanity: this.state.quantity * 1 });
       this.setState({ orders: ordrs, sandwitchId: 0, quantity: 1 });
     }
   }
@@ -54,8 +54,8 @@ export default class SandwithShop extends React.Component<ISandwithShopProps, Sa
     }
   }
 
-  private readItems(listName: string): void {
-    sp.web.lists.getByTitle(listName)
+  private readItems(listName: string): void {   
+    sp.site.rootWeb.lists.getByTitle(listName)
       .items.select('Title', 'Id', 'unitPrice').get()
       .then((items: ISandwitch[]): void => {
         console.log('Items are ', items);
