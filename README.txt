@@ -30,6 +30,8 @@ Review of JS
 	- ECMA Script 6 
 
 SharePoint REST API EndPoints -[READ,Update, Delete SP data ]
+Reference: Use OData query operations in SharePoint REST requests
+https://docs.microsoft.com/en-us/sharepoint/dev/sp-add-ins/use-odata-query-operations-in-sharepoint-rest-requests
 
 sharepointUrl/_api/site - information about Site
 sharepointUrl/_api/web - info about web 

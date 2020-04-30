@@ -55,6 +55,7 @@ export default class SandwithShop extends React.Component<ISandwithShopProps, Sa
   }
 
   private readItems(listName: string): void {   
+    sp.web.lists.getByTitle(listName).items.getById(1).fieldValuesAsText.get().then(data=>console.log('Data is ',data));
     sp.site.rootWeb.lists.getByTitle(listName)
       .items.select('Title', 'Id', 'unitPrice').get()
       .then((items: ISandwitch[]): void => {

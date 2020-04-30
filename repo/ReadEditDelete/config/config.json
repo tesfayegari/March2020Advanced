@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "spcrud-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/spcrud/SpcrudWebPart.js",
+          "manifest": "./src/webparts/spcrud/SpcrudWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "SpcrudWebPartStrings": "lib/webparts/spcrud/loc/{locale}.js",
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js"
+  }
+}
