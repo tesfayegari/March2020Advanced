@@ -22,7 +22,6 @@ export interface ISpcrudWebPartProps {
 export default class SpcrudWebPart extends BaseClientSideWebPart <ISpcrudWebPartProps> {
 
   public render(): void {
-    console.log('Properties', this.properties);
     SPComponentLoader.loadCss("https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
     const element: React.ReactElement<ISpcrudProps> = React.createElement(
       Spcrud,
