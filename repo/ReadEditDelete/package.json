@@ -32,6 +32,7 @@
     "react": "16.8.5",
     "react-bootstrap": "^1.0.1",
     "react-dom": "16.8.5",
+    "react-dual-listbox": "^2.0.0",
     "sp-pnp-js": "^3.0.10"
   },
   "resolutions": {

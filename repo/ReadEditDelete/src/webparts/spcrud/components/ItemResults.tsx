@@ -14,7 +14,7 @@ export default class ItemReults extends React.Component<ItemReultsProps, {}> {
       <tr key={item.Id}>
         <td>{item.Title}</td>
         <td>{item.unitPrice}</td>
-        <td>{item.MultiLookup.map(i => <a href={'#' + i.ID}>{i.Title}</a>)}</td>
+        <td>{item.MultiLookup.map(i => <><a target="_blank" href={'/sites/demo/Lists/AccordionList/DispForm.aspx?ID=' + i.ID}>{i.Title}</a>{'; '}</>)}</td>
         <td>
           <button onClick={() => this.props.editItem(item.Id)} className="btn btn-primary mr-2">
             <FontAwesomeIcon icon={faEdit} />

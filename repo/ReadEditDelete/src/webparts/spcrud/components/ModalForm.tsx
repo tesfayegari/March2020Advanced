@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { sp } from "sp-pnp-js";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { SPForm } from "./SPForm";
 
-export enum FormType{
-  NewForm=1,
+export enum FormType {
+  NewForm = 1,
   EditForm,
   DisplayForm
 }
@@ -13,9 +15,24 @@ interface ModalFormProps {
   onHide: () => void;
   Title: string;
   Type: FormType;
+  item?: any;
 }
 
+
 export class SPModal extends React.Component<ModalFormProps, {}> {
+
+  submitForm = () => {
+
+    console.log('Data to be Submitted is ', SPForm.data);
+    sp.web.lists.getByTitle("Sandwiches").items.getById(SPForm.data.ID).update({
+      Title: SPForm.data.Title,
+      unitPrice: SPForm.data.selected.unitPrice*1,       // allows a single lookup value
+      MultiLookupId: {
+        results: SPForm.data.selected // allows multiple lookup value
+      }
+    }).then(success => console.log('Success', success), error => console.error('Oops error', error) );
+    //this.props.onHide();
+  }
   render() {
     return (
       <Modal
@@ -27,13 +44,13 @@ export class SPModal extends React.Component<ModalFormProps, {}> {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <SPForm formType={this.props.Type}/>
+          <SPForm item={this.props.item} formType={this.props.Type} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={this.props.onHide}>
             Close
           </Button>
-          <Button variant="primary" onClick={this.props.onHide}>
+          <Button variant="primary" onClick={this.submitForm}>
             {this.props.Type === FormType.NewForm ? 'Save' : 'Update'}
           </Button>
         </Modal.Footer>
@@ -41,41 +58,3 @@ export class SPModal extends React.Component<ModalFormProps, {}> {
     );
   }
 }
-
-const SPForm = (props) => {
-  return (
-    <>
-      <div className="form-group">
-        <label htmlFor="exampleFormControlInput1">Email address</label>
-        <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
-      </div>
-      <div className="form-group">
-        <label htmlFor="exampleFormControlSelect1">Example select</label>
-        <select className="form-control" id="exampleFormControlSelect1">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label htmlFor="exampleFormControlSelect2">Example multiple select</label>
-        <select multiple className="form-control" id="exampleFormControlSelect2">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label htmlFor="exampleFormControlTextarea1">Example textarea</label>
-        <textarea className="form-control" id="exampleFormControlTextarea1" rows={3}></textarea>
-      </div>
-    </>
-  );
-}
-
-
-

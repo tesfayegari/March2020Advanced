@@ -10,6 +10,7 @@ import { SPModal, FormType } from "./ModalForm";
 interface ISpcrudState {
   items: any[];
   modalshow: boolean;
+  itemSelected: any;
 }
 
 export default class Spcrud extends React.Component<ISpcrudProps, ISpcrudState> {
@@ -17,7 +18,8 @@ export default class Spcrud extends React.Component<ISpcrudProps, ISpcrudState> 
     super(props);
     this.state = {
       items: [],
-      modalshow: false
+      modalshow: false,
+      itemSelected: {}
     };
     this.searchItems = this.searchItems.bind(this);
   }
@@ -30,9 +32,11 @@ export default class Spcrud extends React.Component<ISpcrudProps, ISpcrudState> 
     this.readItems(nextProps.listName, nextProps.pageSize);
   }
   
-  editItem = (id) => {
+  editItem = (id) => {    
     console.log('Edit clicked', id);
-    this.setState({ modalshow: true });
+    const selected = this.state.items.filter(item => item.Id == id);
+    console.log('Item Selected is ', selected);
+    this.setState({ modalshow: true, itemSelected: selected[0] });
   }
   deleteItem = (id) => {
     console.log('Delete clicked', id)
@@ -85,6 +89,7 @@ export default class Spcrud extends React.Component<ISpcrudProps, ISpcrudState> 
         <ItemPagination />
         <SPModal
           Type={FormType.EditForm}
+          item={this.state.itemSelected}
           Title="Edit Sandwitch"
           show={this.state.modalshow}
           onHide={() => this.setState({modalshow: false})}

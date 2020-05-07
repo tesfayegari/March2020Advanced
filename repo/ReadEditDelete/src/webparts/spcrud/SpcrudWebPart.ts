@@ -23,6 +23,7 @@ export default class SpcrudWebPart extends BaseClientSideWebPart <ISpcrudWebPart
 
   public render(): void {
     SPComponentLoader.loadCss("https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
+    SPComponentLoader.loadCss("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
     const element: React.ReactElement<ISpcrudProps> = React.createElement(
       Spcrud,
       {
