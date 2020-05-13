@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "image-render-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/imageRender/ImageRenderWebPart.js",
+          "manifest": "./src/webparts/imageRender/ImageRenderWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "ImageRenderWebPartStrings": "lib/webparts/imageRender/loc/{locale}.js"
+  }
+}
