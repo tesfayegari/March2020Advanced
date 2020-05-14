@@ -21,17 +21,44 @@ interface ModalFormProps {
 
 export class SPModal extends React.Component<ModalFormProps, {}> {
 
-  submitForm = () => {
+  submitEditForm = () => {
 
-    console.log('Data to be Submitted is ', SPForm.data);
+    console.log('Update Data to be Submitted is ', SPForm.data);
     sp.web.lists.getByTitle("Sandwiches").items.getById(SPForm.data.ID).update({
       Title: SPForm.data.Title,
-      unitPrice: SPForm.data.selected.unitPrice*1,       // allows a single lookup value
+      unitPrice: SPForm.data.unitPrice * 1,       // allows a single lookup value
       MultiLookupId: {
         results: SPForm.data.selected // allows multiple lookup value
       }
-    }).then(success => console.log('Success', success), error => console.error('Oops error', error) );
-    //this.props.onHide();
+    }).then(success => {
+      console.log('Success...', success);
+      this.props.onHide();
+    }, error => {
+      console.error('Oops error', error);
+      alert('Oops error occured');
+      this.props.onHide();
+    });
+
+
+  }
+
+  submitNewForm = () => {
+
+    console.log('New Data to be Submitted is ', SPForm.data);
+    sp.web.lists.getByTitle("Sandwiches").items.add({
+      Title: SPForm.data.Title,
+      unitPrice: SPForm.data.unitPrice * 1,       // allows a single lookup value
+      MultiLookupId: {
+        results: SPForm.data.selected // allows multiple lookup value
+      }
+    }).then(success => {
+      console.log('Success...', success);
+      this.props.onHide();
+    }, error => {
+      console.error('Oops error', error);
+      alert('Oops error occured');
+      this.props.onHide();
+    });
   }
   render() {
     return (
@@ -50,9 +77,14 @@ export class SPModal extends React.Component<ModalFormProps, {}> {
           <Button variant="secondary" onClick={this.props.onHide}>
             Close
           </Button>
-          <Button variant="primary" onClick={this.submitForm}>
-            {this.props.Type === FormType.NewForm ? 'Save' : 'Update'}
-          </Button>
+          {this.props.Type === FormType.NewForm ?
+            <Button variant="primary" onClick={this.submitNewForm}>
+              Submit
+          </Button> : ''}
+          {this.props.Type === FormType.EditForm ?
+            <Button variant="primary" onClick={this.submitEditForm}>
+              Update
+          </Button> : ''}
         </Modal.Footer>
       </Modal>
     );

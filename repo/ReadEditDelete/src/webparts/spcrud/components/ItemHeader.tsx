@@ -26,7 +26,8 @@ export default class Itemheader extends React.Component<ItemheaderProps, Itemhea
   }
 
   setModalShow = (show: boolean) => {
-    this.setState({ modalshow: show })
+    this.setState({ modalshow: show });
+    if(!show){this.props.searchItems(this.state.searchTerm);}
   }
 
   render() {

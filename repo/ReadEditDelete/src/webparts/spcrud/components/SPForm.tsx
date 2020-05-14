@@ -15,7 +15,7 @@ interface SPFormState {
 
 export class SPForm extends React.Component<SPFormProps, SPFormState>{
   static data;
-  constructor(props: SPFormProps){
+  constructor(props: SPFormProps) {
     super(props);
     this.state = {
       Title: '',
@@ -26,26 +26,28 @@ export class SPForm extends React.Component<SPFormProps, SPFormState>{
     this.onChangeLookup = this.onChangeLookup.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     console.log('Props and State is ', this.props, this.state);
-    this.setState({...this.props.item })
-  } 
-  
+    if (this.props.item) {
+      this.setState({ ...this.props.item });
+      this.setState({ selected: this.props.item.MultiLookupId });
+    }
+  }
+
 
   onChange = (e) => {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value } as SPFormState);
+    //SPForm.data = this.state;
   }
 
-  onChangeLookup(selected: string[]){
+  onChangeLookup(selected: string[]) {
     console.log('Parent Selected is ', selected)
-    this.setState({selected})
+    this.setState({ selected })
   }
 
   render() {
-    console.log('Multi Lookup Value', this.state.MultiLookup);
-    var se: string[] = [];
-    this.state.MultiLookup.forEach(l => se.push(l.ID));
+
     SPForm.data = this.state;
     return (
       <>
@@ -56,11 +58,11 @@ export class SPForm extends React.Component<SPFormProps, SPFormState>{
         <div className="form-group">
           <label htmlFor="unitPrice">Unit Price</label>
           <input type="number" value={this.state.unitPrice} onChange={this.onChange} name="unitPrice" className="form-control" placeholder="Sandwitch Name" />
-        </div>       
+        </div>
         <div className="form-group">
           <label htmlFor="multiLookup">Choose Lookup</label>
-          <MultiLookupPicker selected={se} onChange={this.onChangeLookup}  listName="AccordionList" />
-        </div>       
+          <MultiLookupPicker selected={this.state.selected} onChange={this.onChangeLookup} listName="AccordionList" />
+        </div>
       </>
     );
   }
