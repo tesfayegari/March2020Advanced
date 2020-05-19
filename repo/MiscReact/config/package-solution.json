@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "misc-react-client-side-solution",
+    "id": "8cba2e5f-4bb7-42cb-a0d5-7343194d6b07",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "isDomainIsolated": false
+  },
+  "paths": {
+    "zippedPackage": "solution/misc-react.sppkg"
+  }
+}

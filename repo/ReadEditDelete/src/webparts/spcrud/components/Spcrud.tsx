@@ -38,27 +38,27 @@ export default class Spcrud extends React.Component<ISpcrudProps, ISpcrudState> 
   public componentWillReceiveProps(nextProps: ISpcrudProps): void {
     this.readItems(nextProps.listName, nextProps.pageSize);
   }
-  
-  editItem = (id) => {    
+
+  editItem = (id) => {
     console.log('Edit clicked', id);
     const selected = this.state.items.filter(item => item.Id == id);
     console.log('Item Selected is ', selected);
     this.setState({ modalshow: true, itemSelected: selected[0] });
   }
 
-  itemUpdated = ()=>{
-    this.setState({modalshow: false});
+  itemUpdated = () => {
+    this.setState({ modalshow: false });
     this.searchAllItems('');
   }
-  
+
   deleteItem = (id) => {
     console.log('Delete clicked', id);
-    if(confirm(`Are you sure you want to delete item ID ${id}`)){
+    if (confirm(`Are you sure you want to delete item ID ${id}`)) {
       sp.web.lists.getById(this.props.listName).items.getById(id).delete()
-        .then(success=>{
+        .then(success => {
           console.log('Item deleted', success);
           this.searchItems('');
-        }, error=>console.error(error));
+        }, error => console.error(error));
     }
   }
   searchItems = (query: string) => {
@@ -90,7 +90,7 @@ export default class Spcrud extends React.Component<ISpcrudProps, ISpcrudState> 
       .then((resultItems): void => {
         console.log('Data is ', resultItems);
         this.setState({ items: resultItems.results, disableNext: !resultItems.hasNext });
-        this.pagination = resultItems;       
+        this.pagination = resultItems;
 
       }, (error: any): void => {
         console.error('Oops error occured', error);
@@ -118,26 +118,30 @@ export default class Spcrud extends React.Component<ISpcrudProps, ISpcrudState> 
 
   onPrevious = () => {
     console.log('Previous clicked');
-    this.setState({pageNumber: this.state.pageNumber - 1});
-    if(this.state.pageNumber == this.previous.length + 1 )
+    this.setState({ pageNumber: this.state.pageNumber - 1 });
+    if (this.state.pageNumber == this.previous.length + 1)
       this.previous.pop()
     this.pagination = this.previous.pop();
-    this.pagination ? this.onNext(false) : this.searchItems('');
+    this.pagination ? this._handlePagination() : this.searchItems('');
   }
-  onNext = (next: boolean = true) => {
+  onNext = () => {
     console.log('Next clicked');
-    next && this.previous.push(this.pagination);
-    next && this.setState({pageNumber: this.state.pageNumber + 1});
-    this.pagination.hasNext && this.pagination.getNext()
-    .then((resultItems): void => {
-      console.log('Data is ', resultItems);
-      this.setState({ items: resultItems.results, disableNext: !resultItems.hasNext });
-      this.pagination = resultItems;       
+    this.previous.push(this.pagination);
+    this.setState({ pageNumber: this.state.pageNumber + 1 });
+    this._handlePagination();
 
-    }, (error: any): void => {
-      console.error('Oops error occured', error);
-    });
-    
+  }
+
+  private _handlePagination() {
+    this.pagination.hasNext && this.pagination.getNext()
+      .then((resultItems): void => {
+        console.log('Data is ', resultItems);
+        this.setState({ items: resultItems.results, disableNext: !resultItems.hasNext });
+        this.pagination = resultItems;
+
+      }, (error: any): void => {
+        console.error('Oops error occured', error);
+      });
   }
 
   public render(): React.ReactElement<ISpcrudProps> {
@@ -146,10 +150,10 @@ export default class Spcrud extends React.Component<ISpcrudProps, ISpcrudState> 
       <div className="container-fluid pt-2">
         <ItemHeader searchItems={this.searchItems} />
         <ItemReults items={this.state.items} deleteItem={this.deleteItem} editItem={this.editItem} />
-        <ItemPagination next={() =>this.onNext()} 
-          previous={this.onPrevious} 
+        <ItemPagination next={() => this.onNext()}
+          previous={this.onPrevious}
           pageNumber={this.state.pageNumber}
-          disableNext={this.state.disableNext}/>
+          disableNext={this.state.disableNext} />
         <SPModal
           Type={FormType.EditForm}
           item={this.state.itemSelected}

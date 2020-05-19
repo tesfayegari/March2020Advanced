@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/imageRender/ImageRenderWebPart.manifest.json"
         }
       ]
+    },
+    "image-renderer-react-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/imageRendererReact/ImageRendererReactWebPart.js",
+          "manifest": "./src/webparts/imageRendererReact/ImageRendererReactWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "ImageRenderWebPartStrings": "lib/webparts/imageRender/loc/{locale}.js"
+    "ImageRenderWebPartStrings": "lib/webparts/imageRender/loc/{locale}.js",
+    "ImageRendererReactWebPartStrings": "lib/webparts/imageRendererReact/loc/{locale}.js"
   }
 }

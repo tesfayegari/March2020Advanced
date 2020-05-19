@@ -1,10 +1,10 @@
 {
   "@microsoft/generator-sharepoint": {
-    "isCreatingSolution": false,
+    "isCreatingSolution": true,
     "environment": "spo",
     "version": "1.10.0",
-    "libraryName": "image-render",
-    "libraryId": "98303cae-a474-485e-8180-2ce946e043cc",
+    "libraryName": "misc-react",
+    "libraryId": "8cba2e5f-4bb7-42cb-a0d5-7343194d6b07",
     "packageManager": "npm",
     "isDomainIsolated": false,
     "componentType": "webpart"

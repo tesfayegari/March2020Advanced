@@ -1,5 +1,5 @@
 {
-  "name": "image-render",
+  "name": "misc-react",
   "version": "0.0.1",
   "private": true,
   "main": "lib/index.js",
@@ -13,17 +13,21 @@
   },
   "dependencies": {
     "@microsoft/sp-core-library": "1.10.0",
-    "@microsoft/sp-property-pane": "1.10.0",
-    "@microsoft/sp-webpart-base": "1.10.0",
     "@microsoft/sp-lodash-subset": "1.10.0",
     "@microsoft/sp-office-ui-fabric-core": "1.10.0",
-    "@types/webpack-env": "1.13.1",
+    "@microsoft/sp-property-pane": "1.10.0",
+    "@microsoft/sp-webpart-base": "1.10.0",
     "@types/es6-promise": "0.0.33",
-    "react": "16.8.5",
-    "react-dom": "16.8.5",
     "@types/react": "16.8.8",
     "@types/react-dom": "16.8.3",
-    "office-ui-fabric-react": "6.189.2"
+    "@types/webpack-env": "1.13.1",
+    "office-ui-fabric-react": "6.189.2",
+    "react": "16.8.5",
+    "react-dom": "16.8.5",
+    "sp-lookup": "^1.0.9"
+  },
+  "resolutions": {
+    "@types/react": "16.8.8"
   },
   "devDependencies": {
     "@microsoft/sp-build-web": "1.10.0",
@@ -35,8 +39,5 @@
     "@types/chai": "3.4.34",
     "@types/mocha": "2.2.38",
     "ajv": "~5.2.2"
-  },
-  "resolutions": {
-    "@types/react": "16.8.8"
   }
 }

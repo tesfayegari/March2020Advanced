@@ -1,3 +1,5 @@
+import * as React from 'react';
+import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
@@ -6,33 +8,35 @@ import {
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { SPComponentLoader } from "@microsoft/sp-loader";
 
-export interface IImageRenderWebPartProps {
+import * as strings from 'ImageRendererReactWebPartStrings';
+import ImageRendererReact from './components/ImageRendererReact';
+import { IImageRendererReactProps } from './components/IImageRendererReactProps';
+
+export interface IImageRendererReactWebPartProps {
   title: string;
   description: string;
   imageUrl: string;
 }
 
-export default class ImageRenderWebPart extends BaseClientSideWebPart<IImageRenderWebPartProps> {
+export default class ImageRendererReactWebPart extends BaseClientSideWebPart <IImageRendererReactWebPartProps> {
 
   public render(): void {
     SPComponentLoader.loadCss("https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
 
-    this.domElement.innerHTML = `
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="${this.properties.imageUrl}" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">${this.properties.title}</h5>
-              <p class="card-text">${this.properties.description}</p>
-              <a href="#" class="btn btn-primary">View More...</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-          `;
+    const element: React.ReactElement<IImageRendererReactProps> = React.createElement(
+      ImageRendererReact,
+      {
+        description: this.properties.description,
+        title: this.properties.title,
+        imageUrl: this.properties.imageUrl
+      }
+    );
+
+    ReactDom.render(element, this.domElement);
+  }
+
+  protected onDispose(): void {
+    ReactDom.unmountComponentAtNode(this.domElement);
   }
 
   protected get dataVersion(): Version {
@@ -44,11 +48,11 @@ export default class ImageRenderWebPart extends BaseClientSideWebPart<IImageRend
       pages: [
         {
           header: {
-            description: 'Image Renderer Config'
+            description: strings.PropertyPaneDescription
           },
           groups: [
             {
-              groupName: 'General Settings',
+              groupName: strings.BasicGroupName,
               groupFields: [
                 PropertyPaneTextField('title', {
                   label: 'Title'
@@ -57,7 +61,8 @@ export default class ImageRenderWebPart extends BaseClientSideWebPart<IImageRend
                   label: 'Description'
                 }),
                 PropertyPaneTextField('imageUrl', {
-                  label: 'Image URL'
+                  label: 'Image URL',
+                  description: 'Please go to your site asset and get the image url'
                 }),
               ]
             }
