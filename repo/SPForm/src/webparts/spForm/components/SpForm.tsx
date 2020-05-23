@@ -7,7 +7,7 @@ import SPLookup, { FormType } from 'sp-lookup';
 
 export default class SpForm extends React.Component<ISpFormProps, {}> {
   public render(): React.ReactElement<ISpFormProps> {
-    const collections = this.props.collectionData.map(item =>
+    const collections =  this.props.collectionData && this.props.collectionData.map(item =>
       <div key={item.uniqueId} className="card" style={{ width: "18rem" }}>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">{item.firstName} {item.lastName} </li>
@@ -43,7 +43,7 @@ export default class SpForm extends React.Component<ISpFormProps, {}> {
           multi={true}
           onChange={value => console.log(value)}
           label="Lookup 2"
-          formType={FormType.DisplayForm}
+          formType={FormType.EditForm}
           async={true}
         />
         {collections}
