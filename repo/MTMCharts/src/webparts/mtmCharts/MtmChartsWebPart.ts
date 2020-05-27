@@ -8,6 +8,7 @@ import {
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { sp } from "@pnp/sp";
+import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
 
 import * as strings from 'MtmChartsWebPartStrings';
 import MtmCharts from './components/MtmCharts';
@@ -20,22 +21,23 @@ export interface IMtmChartsWebPartProps {
   enablePie: boolean;
   enableDonut: boolean;
   enableLine: boolean;
+  color: string;
 }
 
 export default class MtmChartsWebPart extends BaseClientSideWebPart<IMtmChartsWebPartProps> {
 
   protected onInit(): Promise<void> {
-    return new Promise<void>((resolve: () => void, reject: (error?: any) => void): void => {
+
+    return super.onInit().then(_ => {
+  
+      // other init code may be present
+  
       sp.setup({
-        sp: {
-          headers: {
-            "Accept": "application/json; odata=nometadata"
-          }
-        }
+        spfxContext: this.context
       });
-      resolve();
     });
   }
+  
 
   protected get disableReactivePropertyChanges(): boolean {
     return true;
@@ -45,7 +47,8 @@ export default class MtmChartsWebPart extends BaseClientSideWebPart<IMtmChartsWe
     const element: React.ReactElement<IMtmChartsProps> = React.createElement(
       MtmCharts,
       {
-        ...this.properties
+        ...this.properties,
+        context: this.context
       }
     );
 
@@ -76,6 +79,18 @@ export default class MtmChartsWebPart extends BaseClientSideWebPart<IMtmChartsWe
                 }),
                 PropertyPaneTextField('listName', {
                   label: 'List Name'
+                }),
+                PropertyFieldColorPicker('color', {
+                  label: 'Bar and Line Chart Color',
+                  selectedColor: this.properties.color,
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  properties: this.properties,
+                  disabled: false,
+                  isHidden: false,
+                  alphaSliderHidden: true,
+                  style: PropertyFieldColorPickerStyle.Full,
+                  iconName: 'Precipitation',
+                  key: 'colorFieldId'
                 }),
                 PropertyPaneToggle('enableBar', {
                   label: 'Enable Bar Chart',

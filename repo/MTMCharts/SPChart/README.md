@@ -1,0 +1,1 @@
+SP Chart for any kind of SharePoint list less than 5000 items

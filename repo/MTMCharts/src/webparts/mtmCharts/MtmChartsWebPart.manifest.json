@@ -16,12 +16,13 @@
 
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
-    "group": { "default": "Other" },
-    "title": { "default": "MTMCharts" },
-    "description": { "default": "MTMCharts description" },
-    "officeFabricIconFontName": "Page",
+    "group": { "default": "MTM Webparts" },
+    "title": { "default": "MTM March2020 Charts" },
+    "description": { "default": "Adds Bar, Line, Pie or Donut charts to a page" },
+    "officeFabricIconFontName": "ChartSeries",
     "properties": {
-      "description": "MTMCharts"
+      "description": "MTM Charts",
+      "enableBar": true
     }
   }]
 }

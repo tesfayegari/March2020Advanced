@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { sp } from "@pnp/sp/presets/all";
 import { ChartControl, ChartType } from '@pnp/spfx-controls-react/lib/ChartControl';
+import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
+
 import { IMtmChartsProps } from './IMtmChartsProps';
 
 interface IMtmChartsState {
   items: any[];
-  data: Chart.ChartData;
+  dataPie: Chart.ChartData;
+  dataBar: Chart.ChartData;
 }
 
 export default class MtmCharts extends React.Component<IMtmChartsProps, IMtmChartsState> {
@@ -14,7 +17,8 @@ export default class MtmCharts extends React.Component<IMtmChartsProps, IMtmChar
     super(props);
     this.state = {
       items: [],
-      data: undefined
+      dataPie: undefined,
+      dataBar: undefined,
     }
     this.readItems(this.props.listName);
   }
@@ -93,71 +97,94 @@ export default class MtmCharts extends React.Component<IMtmChartsProps, IMtmChar
       chtData.push(emp.Data.length);
     })
 
-    // set the data
-    const data: Chart.ChartData = {
+    // set the data for Pie
+    const dataPie: Chart.ChartData = {
       labels: chtLabel,
       datasets:
         [{
           label: this.props.description,
           data: chtData,
-          // backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          // borderColor:'rgb(255, 99, 132)',
+          borderWidth: 1
+        }]
+    };
+    // set the data for Bar
+    const dataBar: Chart.ChartData = {
+      labels: chtLabel,
+      datasets:
+        [{
+          label: this.props.description,
+          data: chtData,
+          backgroundColor: this.props.color ? this.props.color : 'rgba(255, 99, 132, 0.2)',
+          borderColor: this.props.color ? this.props.color : 'rgb(255, 99, 132)',
           borderWidth: 1
         }]
     };
 
-    this.setState({ data: data, items: items })
+    this.setState({ dataPie: dataPie, dataBar: dataBar, items: items })
+  }
+
+  private _onConfigure = () => {
+    // Context of the web part
+    this.props.context.propertyPane.open();
   }
 
   public render(): React.ReactElement<IMtmChartsProps> {
 
     const option = this.getOptions();
     return (
-      <div>
-        {this.props.enableBar && <ChartControl
-          type={ChartType.Bar}
-          data={this.state.data}
-          options={option}
-        />}
-        {this.props.enableLine && <ChartControl
-          type={ChartType.Line}
-          data={this.state.data}
-          options={option}
-        />}
+      <>
+        {!this.props.listName &&
+          <Placeholder iconName='Edit'
+            iconText='Configure your web part'
+            description='Please configure the web part.'
+            buttonLabel='Configure'
+            onConfigure={this._onConfigure} />}
+        {this.props.listName && <div>
+          {this.props.enableBar && <ChartControl
+            type={ChartType.Bar}
+            data={this.state.dataBar}
+            options={option}
+          />}
+          {this.props.enableLine && <ChartControl
+            type={ChartType.Line}
+            data={this.state.dataBar}
+            options={option}
+          />}
 
-        {this.props.enableDonut && <ChartControl
-          type={ChartType.Doughnut}
-          data={this.state.data}
-          options={
-            {
-              legend: {
-                display: true,
-                position: "left"
-              },
-              title: {
-                display: true,
-                text: this.props.description
+          {this.props.enableDonut && <ChartControl
+            type={ChartType.Doughnut}
+            data={this.state.dataPie}
+            options={
+              {
+                legend: {
+                  display: true,
+                  position: "right"
+                },
+                title: {
+                  display: true,
+                  text: this.props.description
+                }
               }
             }
-          }
-        />}
-        {this.props.enablePie && <ChartControl
-          type={ChartType.Pie}
-          data={this.state.data}
-          options={
-            {
-              legend: {
-                display: true,
-                position: "left"
-              },
-              title: {
-                display: true,
-                text: this.props.description
+          />}
+          {this.props.enablePie && <ChartControl
+            type={ChartType.Pie}
+            data={this.state.dataPie}
+            options={
+              {
+                legend: {
+                  display: true,
+                  position: "right"
+                },
+                title: {
+                  display: true,
+                  text: this.props.description
+                }
               }
             }
-          }
-        />}
-      </div>
+          />}
+        </div>}
+      </>
     );
   }
 }
