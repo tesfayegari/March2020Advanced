@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <CustomAction
+        Title="SpFxChat"
+        Location="ClientSideExtension.ApplicationCustomizer"
+        ClientSideComponentId="a93cd265-a429-415b-a550-8b7b4ca8c9ed"
+        ClientSideComponentProperties="{&quot;testMessage&quot;:&quot;Test message&quot;}">
+    </CustomAction>
+</Elements>

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/core-build/serve.schema.json",
+  "port": 4321,
+  "https": true,
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "https://chemtrec1.sharepoint.com/SitePages/Home.aspx",
+      "customActions": {
+        "e5f290b9-21e9-45ae-b76d-3c69acda767d": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "testMessage": "MTM First Extension Message"
+          }
+        }
+      }
+    },
+    "mtmExtension1": {
+      "pageUrl": "https://chemtrec1.sharepoint.com/SitePages/Home.aspx",
+      "customActions": {
+        "e5f290b9-21e9-45ae-b76d-3c69acda767d": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "testMessage": "MTM First Extension Message"
+          }
+        }
+      }
+    }
+  }
+}

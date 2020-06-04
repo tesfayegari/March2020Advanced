@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "mtm-extension-1-application-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/mtmExtension1/MtmExtension1ApplicationCustomizer.js",
+          "manifest": "./src/extensions/mtmExtension1/MtmExtension1ApplicationCustomizer.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "MtmExtension1ApplicationCustomizerStrings": "lib/extensions/mtmExtension1/loc/{locale}.js"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/core-build/serve.schema.json",
+  "port": 4321,
+  "https": true,
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "https://chemtrec1.sharepoint.com/SitePages/Home.aspx",
+      "customActions": {
+        "a93cd265-a429-415b-a550-8b7b4ca8c9ed": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "testMessage": "Test message"
+          }
+        }
+      }
+    },
+    "spFxChat": {
+      "pageUrl": "https://chemtrec1.sharepoint.com/SitePages/Home.aspx",
+      "customActions": {
+        "a93cd265-a429-415b-a550-8b7b4ca8c9ed": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "testMessage": "Test message"
+          }
+        }
+      }
+    }
+  }
+}

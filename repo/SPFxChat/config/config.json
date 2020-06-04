@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "sp-fx-chat-application-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/spFxChat/SpFxChatApplicationCustomizer.js",
+          "manifest": "./src/extensions/spFxChat/SpFxChatApplicationCustomizer.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "SpFxChatApplicationCustomizerStrings": "lib/extensions/spFxChat/loc/{locale}.js"
+  }
+}
