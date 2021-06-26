@@ -29,7 +29,7 @@ export default class SandwithShop extends React.Component<ISandwithShopProps, Sa
 
   onChange(e) {
     e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value } as SandwitchShopState);
+    this.setState({ [e.target.name]: e.target.value } as unknown as SandwitchShopState);
   }
 
   add(e) {
