@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 
 interface ItemReultsProps {
   items: any[];
-  editItem: (id) => void;
-  deleteItem: (id) => void;
+ 
 }
 
 export default class ItemReults extends React.Component<ItemReultsProps, {}> {
@@ -14,14 +12,8 @@ export default class ItemReults extends React.Component<ItemReultsProps, {}> {
       <tr key={item.Id}>
         <td>{item.Title}</td>
         <td>{item.unitPrice}</td>
-        <td>{item.MultiLookup.map(i => <><a target="_blank" href={'/sites/demo/Lists/AccordionList/DispForm.aspx?ID=' + i.ID}>{i.Title}</a>{'; '}</>)}</td>
         <td>
-          <button onClick={() => this.props.editItem(item.Id)} className="btn btn-primary mr-2">
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
-          <button onClick={() => this.props.deleteItem(item.Id)} className="btn btn-danger mr-2">
-            <FontAwesomeIcon icon={faTrash} />
-          </button>
+          
         </td>
       </tr>
     );
