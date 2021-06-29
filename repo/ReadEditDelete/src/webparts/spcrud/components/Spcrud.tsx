@@ -149,7 +149,7 @@ export default class Spcrud extends React.Component<ISpcrudProps, ISpcrudState> 
     return (
       <div className="container-fluid pt-2">
         <ItemHeader searchItems={this.searchItems} />
-        <ItemReults items={this.state.items} deleteItem={this.deleteItem} editItem={this.editItem} />
+        <ItemReults items={this.state.items}  />
         <ItemPagination next={() => this.onNext()}
           previous={this.onPrevious}
           pageNumber={this.state.pageNumber}

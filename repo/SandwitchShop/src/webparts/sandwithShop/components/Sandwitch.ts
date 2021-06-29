@@ -7,4 +7,4 @@ export interface ISandwitch{
 export interface ISandwitchOrders {
   sandwitch: ISandwitch;
   quanity: number;
-}
+}       
